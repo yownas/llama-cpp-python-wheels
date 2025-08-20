@@ -135,8 +135,3 @@ jobs:
           make_latest: false
           overwrite: true
         
-      - uses: actions/upload-artifact@v3
-        if: steps.upload-release.outcome == 'failure'
-        with:
-          name: cpu
-          path: ./dist/*.whl
