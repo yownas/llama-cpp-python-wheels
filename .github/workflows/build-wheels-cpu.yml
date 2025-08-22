@@ -130,7 +130,7 @@ jobs:
         continue-on-error: true
         with:
           file: ./dist/*.whl
-          tag: 'cpu'
+          tag: ${{ inputs.version }}
           file_glob: true
           make_latest: false
           overwrite: true
