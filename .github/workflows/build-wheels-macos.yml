@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version tag of llama-cpp-python to build: v0.2.20'
-        default: 'v0.2.20'
+        description: 'Version tag of llama-cpp-python to build: v0.3.16'
+        default: 'v0.3.16'
         required: true
         type: string
       config:
@@ -21,8 +21,8 @@ on:
   workflow_call:
     inputs:
       version:
-        description: 'Version tag of llama-cpp-python to build: v0.2.20'
-        default: 'v0.2.20'
+        description: 'Version tag of llama-cpp-python to build: v0.3.16'
+        default: 'v0.3.16'
         required: true
         type: string
       config:
@@ -58,7 +58,7 @@ jobs:
         run: |
           $matrix = @{
               'os' = "macos-13", "macos-12"
-              'pyver' = "3.10", "3.8", "3.9", "3.11"
+              'pyver' = "3.10", "3.11", "3.12"
           }
           
           if ($env:CONFIGIN -ne 'Default') {$env:CONFIGIN.split(';').foreach({$matrix[$_.split(':')[0]] = $_.split(':')[1].split(',')})}
@@ -136,7 +136,7 @@ jobs:
           make_latest: false
           overwrite: true
         
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: steps.upload-release.outcome == 'failure'
         with:
           name: macos-wheels
