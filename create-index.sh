@@ -7,7 +7,7 @@ TAGS=$(gh release list --json tagName | jq -r '.[]|[.tagName] | @tsv')
 BUILDS=$(cd $INDEXDIR;ls -1d */|tr -d /)
 
 # Index - header
-cat << EOF > ${INDEXDIR}/index.html
+cat <<EOF > ${INDEXDIR}/index.html
 <!DOCTYPE html>
 <html>
   <body>
@@ -16,6 +16,14 @@ EOF
 # Headers
 for BUILD in $BUILDS;do
   echo "    <a href=\"${BUILD}/\">${BUILD}</a><br/>" >> ${INDEXDIR}/index.html
+  cat <<EOF > ${INDEXDIR}/${BUILD}/index.html
+<!DOCTYPE html>
+<html>
+  <body>
+    <a href="${PKGNAME}/">${PKGNAME}</a><br/>
+  </body>
+</html>
+EOF
   cat <<EOF > ${INDEXDIR}/${BUILD}/${PKGNAME}/index.html
 <!DOCTYPE html>
   <html>
@@ -24,7 +32,7 @@ EOF
 done
 
 # Index - footer
-cat << EOF >> ${INDEXDIR}/index.html
+cat <<EOF >> ${INDEXDIR}/index.html
   </body>
 </html>
 EOF
