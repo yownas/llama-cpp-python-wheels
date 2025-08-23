@@ -6,14 +6,28 @@ PKGNAME="llama-cpp-python"
 TAGS=$(gh release list --json tagName | jq -r '.[]|[.tagName] | @tsv')
 BUILDS=$(cd $INDEXDIR;ls -1d */|tr -d /)
 
+# Index - header
+cat << EOF > ${INDEXDIR}/index.html
+<!DOCTYPE html>
+<html>
+  <body>
+EOF
+
 # Headers
 for BUILD in $BUILDS;do
+  echo "    <a href=\"${BUILD}/\">${BUILD}</a><br/>" >> ${INDEXDIR}/index.html
   cat <<EOF > ${INDEXDIR}/${BUILD}/${PKGNAME}/index.html
 <!DOCTYPE html>
   <html>
     </body>
 EOF
 done
+
+# Index - footer
+cat << EOF >> ${INDEXDIR}/index.html
+  </body>
+</html>
+EOF
 
 for TAG in $TAGS; do
   FILES=$(gh release view $TAG --json assets | jq -r '.[]|.[]|[.name]|@tsv')
